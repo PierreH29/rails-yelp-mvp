@@ -1,13 +1,7 @@
 class Restaurant < ApplicationRecord
-  has_many :reviews # => dishoom.reviews
+  has_many :reviews, dependent: :destroy # => dishoom.reviews
   validates :name, :address, presence:true
-  validates :category, inclusion: { in: %w("chinese", "italian", "japanese", "french", "belgian")}, presence: true
-
-  after_destroy do
-        unless @restaurant.reviews.any?
-            @restaurant.destroy
-        end
-      end
+  validates :category, inclusion: { in: %w(chinese italian japanese french belgian)}, presence: true
 
   # scope :top, -> { where(stars: 5) }
 
